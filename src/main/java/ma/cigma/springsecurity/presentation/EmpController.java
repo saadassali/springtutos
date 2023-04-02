@@ -85,7 +85,7 @@ public class EmpController {
 		return "redirect:/admin/emp/view";
 	}
 	@Tracabilite
-	@Admin1Profile(noms= {"admin1","admin2"})
+
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String delete(@PathVariable Long id) {
 		service.delete(id);

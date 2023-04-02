@@ -41,11 +41,11 @@ public class EmpServiceImpl implements IEmpService {
 		boolean trouve = empRepository.existsById(id);
 		if (!trouve)
 			return null;
-		return EmpConverter.toVo(empRepository.getOne(id));
+		return EmpConverter.toVo(empRepository.findById(id).get());
 	}
 	@Override
-	@Admin1Profile(noms= {"admin1"})
 	@LogExecutionTime
+	@Admin1Profile(noms= {"admin1","admin2"})
 	public void delete(Long id) {
 		empRepository.deleteById(id);
 	}
