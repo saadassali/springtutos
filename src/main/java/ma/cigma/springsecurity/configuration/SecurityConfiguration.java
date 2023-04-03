@@ -13,8 +13,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import ma.cigma.springsecurity.service.IUserService;
 
 @Configuration
-@EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+//@EnableWebSecurity
+public class SecurityConfiguration //extends WebSecurityConfigurerAdapter
+{
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -22,37 +23,37 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private IUserService userService;
 	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);
-	}
-	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-
-		http.authorizeRequests().
-		antMatchers("/rest/**").hasAuthority("ADMIN");
-		
-		http.authorizeRequests().
-		antMatchers("/").permitAll().
-		antMatchers("/login").permitAll().
-		antMatchers("/welcome").hasAnyAuthority("ADMIN","CLIENT").
-		antMatchers("/admin/**").hasAuthority("ADMIN").
-		antMatchers("/client/**").hasAuthority("CLIENT").
-		anyRequest().authenticated().
-		and().csrf().disable().
-		formLogin().loginPage("/login").
-		failureUrl("/login?error=true").
-		defaultSuccessUrl("/welcome").
-		usernameParameter("username").
-		passwordParameter("password").
-		and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").
-		and().exceptionHandling().accessDeniedPage("/access-denied");
-	}
-
-	@Override
-	public void configure(WebSecurity web) {
-		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
-	}
+//	@Override
+//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//		auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);
+//	}
+//
+//	@Override
+//	protected void configure(HttpSecurity http) throws Exception {
+//
+//		http.authorizeRequests().
+//		antMatchers("/rest/**").hasAuthority("ADMIN");
+//
+//		http.authorizeRequests().
+//		antMatchers("/").permitAll().
+//		antMatchers("/login").permitAll().
+//		antMatchers("/welcome").hasAnyAuthority("ADMIN","CLIENT").
+//		antMatchers("/admin/**").hasAuthority("ADMIN").
+//		antMatchers("/client/**").hasAuthority("CLIENT").
+//		anyRequest().authenticated().
+//		and().csrf().disable().
+//		formLogin().loginPage("/login").
+//		failureUrl("/login?error=true").
+//		defaultSuccessUrl("/welcome").
+//		usernameParameter("username").
+//		passwordParameter("password").
+//		and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").
+//		and().exceptionHandling().accessDeniedPage("/access-denied");
+//	}
+//
+//	@Override
+//	public void configure(WebSecurity web) {
+//		web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+//	}
 
 }
